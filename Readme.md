@@ -16,3 +16,11 @@ Build using `gradle assemble` which should generate an archive containing the di
 ## Running
 
 // TODO - Instructions for running this to get results as per the demo required in the presentation
+
+  - Make sure you're running on Oracle JDK 1.8
+    - `export JAVA_HOME=/path/to/oracle/jdk/on/your/machine`
+  - Unzip distribution and go into it's folder
+    - `unzip OffHeapLeakExample-1.0-SNAPSHOT.zip`
+    - `cd OffHeapLeakExample-1.0-SNAPSHOT`
+  - Run the application from the root folder
+    - `./bin/OffHeapLeakExample`
