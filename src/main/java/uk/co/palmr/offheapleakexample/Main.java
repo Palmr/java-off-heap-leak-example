@@ -42,10 +42,6 @@ public class Main {
         useMemory();
         logger.info("...done");
 
-        logger.info("Shutting down in 20 seconds...");
-        Thread.sleep(TimeUnit.SECONDS.toMillis(20));
-        logger.info("...done");
-
         // On shutdown...
 //        offHeapThreads.shutdownThreadPool();
     }
