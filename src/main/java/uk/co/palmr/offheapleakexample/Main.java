@@ -44,6 +44,7 @@ public class Main {
 
         // On shutdown...
 //        offHeapThreads.shutdownThreadPool();
+//        offHeapJni.shutdownThreadPool();
     }
 
     private static void useMemory() throws IOException {
