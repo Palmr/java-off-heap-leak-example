@@ -14,6 +14,7 @@ import java.util.concurrent.TimeUnit;
 
 public class Main {
     private static final Logger logger = LogManager.getLogger(Main.class);
+    private static final String EXPECTED_VM_NAME = "Java HotSpot(TM) 64-Bit Server VM";
 
     private static General onHeapGeneral;
     private static Strings onHeapStrings;
@@ -23,7 +24,15 @@ public class Main {
     private static Threads offHeapThreads;
     private static Jni offHeapJni;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws Exception
+    {
+        String vmName = System.getProperty("java.vm.name");
+        if (!vmName.equals(EXPECTED_VM_NAME))
+        {
+            logger.error("Potentially not running on the Oracle JVM, expected '{}' found '{}'",
+                    EXPECTED_VM_NAME, vmName);
+        }
+
         logger.info("Starting application...");
         onHeapGeneral = new General();
         onHeapStrings = new Strings();
@@ -47,7 +56,8 @@ public class Main {
 //        offHeapJni.shutdownThreadPool();
     }
 
-    private static void useMemory() throws IOException {
+    private static void useMemory() throws IOException
+    {
         onHeapGeneral.useMemory();
         onHeapStrings.useMemory();
 
