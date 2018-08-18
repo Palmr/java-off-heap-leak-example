@@ -17,7 +17,7 @@ Build using `gradle assemble` which should generate an archive containing the di
  But if you want to build this project yourself, run assemble **twice** otherwise it will be missing the native library 
  in the distribution.
 
-### Changes to QuestionableJniLib
+### Changing QuestionableJniLib
 
   - Change to the JNI projects Java directory
     - `cd ./QuestionableJniLib/src/main/java`
@@ -26,8 +26,6 @@ Build using `gradle assemble` which should generate an archive containing the di
 
 ## Running
 
-// TODO - Instructions for running this to get results as per the demo required in the presentation
-
   - Make sure you're running on Oracle JDK 1.8
     - `export JAVA_HOME=/path/to/oracle/jdk/on/your/machine`
   - Unzip distribution and go into it's folder
@@ -35,3 +33,58 @@ Build using `gradle assemble` which should generate an archive containing the di
     - `cd OffHeapLeakExample-1.0-SNAPSHOT`
   - Run the application from the root folder
     - `./bin/OffHeapLeakExample`
+  - While it's paused for 20 seconds before using memory
+    - Start logging memory to a file for plotting
+      - `./bin/log_memory.sh`
+    - Create a Native Memory Tracking baseline
+      - `jcmd <pid> VM.native_memory baseline`
+  - Wait some time, got to let it gobble up memory...
+  - Look at memory use
+    - `./bin/plot_memory.gnuplot`
+    - Looking higher than expected?
+  - See what the JVM has to say about the heap
+    - `jmap -heap <pid>`
+  - Investigate the heap and maybe buffers with visualvm
+    - `jvisualvm`
+  - Check out diff between the Native Memory Tracking baseline taken and now: 
+    - Summary diff (usually good enough): `jcmd <pid> VM.native_memory summary.diff`
+    - Detail diff (usually too much detail): `jcmd <pid> VM.native_memory detail.diff`
+  - Nothing particularly obvious there to explain endless memory use? Can kill the application now
+  - Generate out the jemalloc profile diagrams
+    - `./bin/jeprof_diagrams.sh`
+  - Hopefully by now you've spotted where the memory is going!
+
+### Jemalloc Runtime Error Messages
+
+If you see lines in the stdout from the application like:
+
+ > \<jemalloc>: Invalid conf pair: prof:true
+
+Then the jemalloc on your machine was not compiled with profiling enabled.
+
+The following is a bash script to do this if on a distro using dnf (i.e. Fedora, CentOS)
+
+```bash
+#!/bin/bash
+
+# download source rpm to this folder
+sudo dnf download --source jemalloc
+
+# install source folder, will go to user home/rpmbuilds
+rpm -ivh jemalloc*.src.rpm
+
+# go to specs
+cd ~/rpmbuild/SPECS
+
+# get deps
+sudo dnf builddep jemalloc.spec
+
+# add --enable-prof to configure argument
+sed -i '/^%configure/ s/$/ --enable-prof/' ~/rpmbuild/SPECS/jemalloc.spec
+
+# build package
+rpmbuild -bb jemalloc.spec
+
+# install resultant rpm
+sudo rpm -ivh `ls -1B ~/rpmbuild/RPMS/x86_64/jemalloc-*.rpm | grep -v 'dev\|debug'`
+```

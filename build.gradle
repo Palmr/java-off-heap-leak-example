@@ -30,7 +30,23 @@ dependencies {
 
 applicationName = 'OffHeapLeakExample'
 mainClassName = "uk.co.palmr.offheapleakexample.Main"
-applicationDefaultJvmArgs = ['-Xms32m', '-Xmx32m', '-XX:NativeMemoryTracking=detail', '-Dlog4j.configurationFile=resources/log4j.properties']
+applicationDefaultJvmArgs = [
+        '-Xms32m',
+        '-Xmx32m',
+        '-XX:NativeMemoryTracking=detail',
+        '-Dlog4j.configurationFile=resources/log4j.properties'
+]
+
+startScripts {
+    doLast {
+        def newEnvVars = "# Use jemalloc instead of glibc\n" +
+                "export LD_PRELOAD=`jemalloc-config --libdir`/libjemalloc.so.`jemalloc-config --revision`\n" +
+                "\n" +
+                "# Use jemalloc profiling, memory profile dump every 30 mB, allocation sample every 128 kB\n" +
+                "export MALLOC_CONF=prof:true,lg_prof_interval:25,lg_prof_sample:17"
+        unixScript.text = unixScript.text.replace("MAX_FD=\"maximum\"", "MAX_FD=\"maximum\"\n\n$newEnvVars")
+    }
+}
 
 distributions {
     main {
@@ -40,6 +56,9 @@ distributions {
             }
             from('QuestionableJniLib/build/libs/questionableJniLib/shared/libQuestionableJniLib.so') {
                 into {'lib'}
+            }
+            from('src/main/scripts') {
+                into {'bin'}
             }
         }
     }
