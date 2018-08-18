@@ -13,6 +13,10 @@ Definitely do not look at this code for good practices. There are intentional le
 
 Build using `gradle assemble` which should generate an archive containing the distributable code in build/distributions
 
+ *Note*: I've got something wrong with my gradle sub-project build ordering setup that I haven't figured out how to fix.
+ But if you want to build this project yourself, run assemble **twice** otherwise it will be missing the native library 
+ in the distribution.
+
 ### Changes to QuestionableJniLib
 
   - Change to the JNI projects Java directory

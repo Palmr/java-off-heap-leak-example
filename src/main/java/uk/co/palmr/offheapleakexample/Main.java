@@ -3,6 +3,7 @@ package uk.co.palmr.offheapleakexample;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import uk.co.palmr.offheapleakexample.offheap.Buffers;
+import uk.co.palmr.offheapleakexample.offheap.Jni;
 import uk.co.palmr.offheapleakexample.offheap.Threads;
 import uk.co.palmr.offheapleakexample.offheap.UnclosedZipStream;
 import uk.co.palmr.offheapleakexample.onheap.General;
@@ -20,6 +21,7 @@ public class Main {
     private static UnclosedZipStream offHeapUnclosedZipStream;
     private static Buffers offHeapBuffers;
     private static Threads offHeapThreads;
+    private static Jni offHeapJni;
 
     public static void main(String[] args) throws Exception {
         logger.info("Starting application...");
@@ -29,6 +31,7 @@ public class Main {
         offHeapBuffers = new Buffers();
         offHeapUnclosedZipStream = new UnclosedZipStream();
         offHeapThreads = new Threads();
+        offHeapJni = new Jni();
         logger.info("...done");
 
         logger.info("Pausing for 20 seconds...");
@@ -54,5 +57,6 @@ public class Main {
         offHeapBuffers.useMemory();
         offHeapUnclosedZipStream.useMemory();
         offHeapThreads.useMemory();
+        offHeapJni.useMemory();
     }
 }

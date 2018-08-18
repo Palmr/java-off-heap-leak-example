@@ -25,6 +25,7 @@ dependencies {
     compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
     compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    compile project(':QuestionableJniLib')
 }
 
 applicationName = 'OffHeapLeakExample'
@@ -36,6 +37,9 @@ distributions {
         contents {
             from('src/main/resources') {
                 into {'resources'}
+            }
+            from('QuestionableJniLib/build/libs/questionableJniLib/shared/libQuestionableJniLib.so') {
+                into {'lib'}
             }
         }
     }
