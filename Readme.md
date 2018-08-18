@@ -13,6 +13,13 @@ Definitely do not look at this code for good practices. There are intentional le
 
 Build using `gradle assemble` which should generate an archive containing the distributable code in build/distributions
 
+### Changes to QuestionableJniLib
+
+  - Change to the JNI projects Java directory
+    - `cd ./QuestionableJniLib/src/main/java`
+  - Generate header file
+    - `javah -jni -d ./../c uk.co.palmr.offheapleakexample.jni.QuestionableJniLib`
+
 ## Running
 
 // TODO - Instructions for running this to get results as per the demo required in the presentation
