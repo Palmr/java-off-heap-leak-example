@@ -18,6 +18,10 @@ fi
 
 echo "Application found with PID=${PID}"
 
+echo "Taking a NMT baseline"
+jcmd ${PID} VM.native_memory baseline
+
+echo "Logging Resident Set Memory"
 while [ -d "/proc/${PID}" ]
 do
     awk '($1 == "VmRSS:"){print strftime("%Y-%m-%d_%H:%M:%S"), $2, "kB"}' /proc/${PID}/status | tee -a ${RESIDENT_SET_LOG_FILE}

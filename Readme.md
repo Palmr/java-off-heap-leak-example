@@ -34,10 +34,9 @@ Build using `gradle assemble` which should generate an archive containing the di
   - Run the application from the root folder
     - `./bin/OffHeapLeakExample`
   - While it's paused for 20 seconds before using memory
-    - Start logging memory to a file for plotting
-      - `./bin/log_memory.sh`
     - Create a Native Memory Tracking baseline
-      - `jcmd <pid> VM.native_memory baseline`
+    - Start logging memory to a file for plotting
+    - `./bin/baseline_NMT_and_log_memory.sh`
   - Wait some time, got to let it gobble up memory...
   - Look at memory use
     - `./bin/plot_memory.gnuplot`
