@@ -7,7 +7,7 @@ Definitely do not look at this code for good practices. There are intentional le
 
 ## Presentation
 
-// TODO - Link to presentation
+https://drive.google.com/open?id=1TsjfLCuIKoE_Q3kDFtwoCkuLZ3mr2KpyPO-t-qeYDyU
 
 ## Building
 
