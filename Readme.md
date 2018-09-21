@@ -9,6 +9,17 @@ Definitely do not look at this code for good practices. There are intentional le
 
 https://drive.google.com/open?id=1TsjfLCuIKoE_Q3kDFtwoCkuLZ3mr2KpyPO-t-qeYDyU
 
+## Requirements
+
+  - Linux (definitely won't work on Windows, may work one day on OSX)
+  - GCC, for building the native library
+  - Java, ideally Oracle JDK 1.8
+  - Gnuplot, script currently hard coded for gnuplot-wx but could use any Gnuplot front end
+  - Jemalloc, built with profiling enabled
+    - Not sure if your jemalloc has profiling enabled? Run `jemalloc-config --config` and 
+    look for `--enable-prof` in the output. If it's not there see the 
+    [Jemalloc Runtime Error Messages](#jemalloc-runtime-error-messages) section of this readme
+
 ## Building
 
 Build using `gradle assemble` which should generate an archive containing the distributable code in build/distributions
@@ -62,10 +73,10 @@ specifying the main class to run.
 
 The gradle script does add some extra bits to this command which you might want to take note of:
 
-- Setting the heap size (`-Xms` & `-Xmx`): [./build.gradle#L34](./build.gradle#L34) & [./build.gradle#L35](./build.gradle#L35)
-- Enabled Native Memory Tracking: [./build.gradle#L36](./build.gradle#L36)
-- Use jemalloc instead of system default malloc: [./build.gradle#L43](./build.gradle#L43)
-- Set up jemalloc profiling arguments: [./build.gradle#L46](./build.gradle#L46)
+  - Setting the heap size (`-Xms` & `-Xmx`): [./build.gradle#L34](./build.gradle#L34) & [./build.gradle#L35](./build.gradle#L35)
+  - Enabled Native Memory Tracking: [./build.gradle#L36](./build.gradle#L36)
+  - Use jemalloc instead of system default malloc: [./build.gradle#L43](./build.gradle#L43)
+  - Set up jemalloc profiling arguments: [./build.gradle#L46](./build.gradle#L46)
 
 #### `./bin/baseline_NMT_and_log_memory.sh`
 
