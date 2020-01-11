@@ -1,4 +1,4 @@
-#!/usr/bin/gnuplot-wx
+#!/usr/bin/gnuplot
 
 # log line example: 2018-07-11_10:09:05 337056 kB
 set xdata time
