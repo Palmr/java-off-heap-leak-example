@@ -118,7 +118,7 @@ Then the jemalloc on your machine was not compiled with profiling enabled.
 
 ### JMAP
 
-If you run `jmap -histo` and get an error like this:
+If you run `jmap -heap <pid>` and get an error like this:
 
 ```
 Exception from jmap -heap:
