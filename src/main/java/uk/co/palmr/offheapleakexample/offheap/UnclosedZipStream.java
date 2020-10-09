@@ -17,7 +17,7 @@ public class UnclosedZipStream
     private static final int BUFFER_SIZE = 1024 * 1024; // 1MB
 
     private ZipOutputStream zipOutputStream;
-    private byte[] buffer = new byte[BUFFER_SIZE];
+    private final byte[] buffer = new byte[BUFFER_SIZE];
 
     public UnclosedZipStream()
     {

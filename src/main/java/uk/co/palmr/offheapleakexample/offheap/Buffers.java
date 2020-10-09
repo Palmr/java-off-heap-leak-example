@@ -11,7 +11,7 @@ import java.nio.channels.FileChannel;
 
 public class Buffers
 {
-    private static final Logger logger = LogManager.getLogger(Buffers.class);
+    private static final Logger LOGGER = LogManager.getLogger(Buffers.class);
 
     private static final int BUFFER_SIZE = 5 * 1024 * 1024; // 5MB
 
@@ -19,7 +19,7 @@ public class Buffers
     private MappedByteBuffer mappedByteBuffer;
 
     // Runtime jar should be there, given it's Oracle/Open JDK
-    private String fileToMap = System.getProperty("java.home") + "/lib/rt.jar";
+    private final String fileToMap = System.getProperty("java.home") + "/lib/rt.jar";
 
     public void useMemory() throws IOException
     {
@@ -29,14 +29,14 @@ public class Buffers
 
     private void allocateDirectBuffer()
     {
-        logger.info("Allocating direct buffer {} bytes", BUFFER_SIZE);
+        LOGGER.info("Allocating direct buffer {} bytes", BUFFER_SIZE);
         directBuffer = ByteBuffer.allocateDirect(BUFFER_SIZE);
         directBuffer.put("Using some off-heap memory in a direct buffer".getBytes());
     }
 
     private void allocateMappedBuffer() throws IOException
     {
-        logger.info("Allocating mapped buffer {} bytes", BUFFER_SIZE);
+        LOGGER.info("Allocating mapped buffer {} bytes", BUFFER_SIZE);
         final FileInputStream fileInputStream = new FileInputStream(fileToMap);
         mappedByteBuffer = fileInputStream.getChannel().map(FileChannel.MapMode.READ_ONLY, 0, BUFFER_SIZE);
         mappedByteBuffer.load();

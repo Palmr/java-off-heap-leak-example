@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class Main {
-    private static final Logger logger = LogManager.getLogger(Main.class);
+    private static final Logger LOGGER = LogManager.getLogger(Main.class);
     private static final String EXPECTED_VM_NAME = "Java HotSpot(TM) 64-Bit Server VM";
 
     private static General onHeapGeneral;
@@ -29,11 +29,11 @@ public class Main {
         String vmName = System.getProperty("java.vm.name");
         if (!vmName.equals(EXPECTED_VM_NAME))
         {
-            logger.error("Potentially not running on the Oracle JVM, expected '{}' found '{}'",
+            LOGGER.error("Potentially not running on the Oracle JVM, expected '{}' found '{}'",
                     EXPECTED_VM_NAME, vmName);
         }
 
-        logger.info("Starting application...");
+        LOGGER.info("Starting application...");
         onHeapGeneral = new General();
         onHeapStrings = new Strings();
 
@@ -41,15 +41,15 @@ public class Main {
         offHeapUnclosedZipStream = new UnclosedZipStream();
         offHeapThreads = new Threads();
         offHeapJni = new Jni();
-        logger.info("...done");
+        LOGGER.info("...done");
 
-        logger.info("Pausing for 20 seconds...");
+        LOGGER.info("Pausing for 20 seconds...");
         Thread.sleep(TimeUnit.SECONDS.toMillis(20));
-        logger.info("...done");
+        LOGGER.info("...done");
 
-        logger.info("Consume memory...");
+        LOGGER.info("Consume memory...");
         useMemory();
-        logger.info("...done");
+        LOGGER.info("...done");
 
         // On shutdown...
 //        offHeapThreads.shutdownThreadPool();

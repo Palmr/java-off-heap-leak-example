@@ -10,10 +10,10 @@ import static java.util.concurrent.TimeUnit.SECONDS;
 
 public class Threads
 {
-    private static final Logger logger = LogManager.getLogger(Threads.class);
+    private static final Logger LOGGER = LogManager.getLogger(Threads.class);
 
     private static final int THREAD_POOL_SIZE = 10;
-    private ScheduledExecutorService scheduler;
+    private final ScheduledExecutorService scheduler;
 
     public Threads()
     {
@@ -22,7 +22,7 @@ public class Threads
 
     public void useMemory()
     {
-        logger.info("Spawning {} threads", THREAD_POOL_SIZE);
+        LOGGER.info("Spawning {} threads", THREAD_POOL_SIZE);
         for (int i = 0; i < THREAD_POOL_SIZE; i++)
         {
             scheduler.scheduleAtFixedRate(this::scheduledTask, i, THREAD_POOL_SIZE, SECONDS);
@@ -31,7 +31,7 @@ public class Threads
 
     private void scheduledTask()
     {
-        logger.info("Scheduled work is happening...");
+        LOGGER.info("Scheduled work is happening...");
     }
 
     public void shutdownThreadPool()

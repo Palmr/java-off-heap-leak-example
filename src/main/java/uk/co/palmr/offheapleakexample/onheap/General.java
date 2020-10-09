@@ -26,7 +26,7 @@ public class General
         }
     }
 
-    private class ObjectForHeap
+    private static class ObjectForHeap
     {
         private final String id;
 

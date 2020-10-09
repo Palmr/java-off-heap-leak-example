@@ -11,9 +11,9 @@ import static java.util.concurrent.TimeUnit.MILLISECONDS;
 
 public class Jni
 {
-    private static final Logger logger = LogManager.getLogger(Jni.class);
+    private static final Logger LOGGER = LogManager.getLogger(Jni.class);
     private final QuestionableJniLib questionableJniLib = QuestionableJniLib.getInstance();
-    private ScheduledExecutorService scheduler;
+    private final ScheduledExecutorService scheduler;
 
     public Jni()
     {
@@ -22,7 +22,7 @@ public class Jni
 
     public void useMemory()
     {
-        logger.info("Scheduling a random JNI call every 500ms");
+        LOGGER.info("Scheduling a random JNI call every 500ms");
         scheduler.scheduleAtFixedRate(this::randomJni, 0, 500, MILLISECONDS);
     }
 
