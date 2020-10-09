@@ -1,31 +1,26 @@
 plugins {
-    id 'idea'
     id 'java'
     id 'application'
 }
 
-group 'uk.co.palmr'
-version '1.0-SNAPSHOT'
+allprojects {
+    apply plugin: 'idea'
 
-sourceCompatibility = 1.8
+    group 'uk.co.palmr'
+    version '1.0-SNAPSHOT'
 
-repositories {
-    mavenCentral()
-}
+    sourceCompatibility = 1.8
 
-subprojects.each {
-    subproject -> evaluationDependsOn(subproject.path)
-}
-
-assemble.doFirst {
-    project(':QuestionableJniLib').assemble
+    repositories {
+        mavenCentral()
+    }
 }
 
 dependencies {
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '2.11.1'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '2.11.1'
-    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
-    compile project(':QuestionableJniLib')
+    implementation 'org.apache.logging.log4j:log4j-api:2.11.1'
+    implementation 'org.apache.logging.log4j:log4j-core:2.11.1'
+    implementation 'org.apache.commons:commons-lang3:3.0'
+    implementation project(':QuestionableJniLib')
 }
 
 applicationName = 'OffHeapLeakExample'
@@ -51,14 +46,15 @@ startScripts {
 distributions {
     main {
         contents {
+            from('src/main/scripts') {
+                into {'bin'}
+            }
             from('src/main/resources') {
                 into {'resources'}
             }
-            from('QuestionableJniLib/build/libs/questionableJniLib/shared/libQuestionableJniLib.so') {
+            from(tasks.getByPath(':QuestionableCLib:linkQuestionableCLibSharedLibrary')) {
+                duplicatesStrategy = 'INCLUDE'
                 into {'lib'}
-            }
-            from('src/main/scripts') {
-                into {'bin'}
             }
         }
     }

@@ -1,0 +1,40 @@
+plugins {
+    id 'c'
+}
+
+def JNI_INCLUDE_DIR = System.properties['java.home'] + "/../include"
+
+model {
+    components {
+        QuestionableCLib(NativeLibrarySpec) {
+            sources {
+                c {
+                    source {
+                        srcDir 'src/main/c'
+                    }
+                }
+            }
+        }
+    }
+    toolChains {
+        gcc(Gcc) {
+            eachPlatform {
+                if(System.properties['os.name'].equals("Mac OS X")) {
+                    cCompiler.withArguments {  args ->
+                        args << "-I" + JNI_INCLUDE_DIR
+                        args << "-I" + JNI_INCLUDE_DIR + "/darwin"
+                        args << "-std=gnu11"
+                        args << "-g"
+                    }
+                } else {
+                    cCompiler.withArguments {  args ->
+                        args << "-I" + JNI_INCLUDE_DIR
+                        args << "-I" + JNI_INCLUDE_DIR + "/linux"
+                        args << "-std=gnu11"
+                        args << "-g"
+                    }
+                }
+            }
+        }
+    }
+}

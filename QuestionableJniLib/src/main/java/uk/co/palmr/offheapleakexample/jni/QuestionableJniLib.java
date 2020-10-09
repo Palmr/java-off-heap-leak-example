@@ -37,7 +37,7 @@ public class QuestionableJniLib {
             return envVar;
         }
 
-        return "lib/libQuestionableJniLib.so";
+        return "lib/libQuestionableCLib.so";
     }
 
     public native void nativeMethodOne();

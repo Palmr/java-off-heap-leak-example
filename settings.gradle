@@ -2,3 +2,4 @@ rootProject.name = 'java-off-heap-leak-example'
 
 
 include 'QuestionableJniLib'
+include 'QuestionableCLib'
